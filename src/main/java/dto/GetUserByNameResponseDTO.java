@@ -13,12 +13,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetUserByNameResponseDTO {
-  private Long id;
+  private Integer id;
   private String username;
   private String firstName;
   private String lastName;
   private String email;
   private String password;
   private String phone;
-  private Long userStatus;
+  private Integer userStatus;
 }

@@ -10,16 +10,17 @@
 
     <properties>
         <base.url>https://petstore.swagger.io/v2</base.url>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <lombok.version>1.18.30</lombok.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+<!--        <maven.compiler.release>17</maven.compiler.release>-->
+        <lombok.version>1.18.32</lombok.version>
         <jackson-annotations.version>2.16.1</jackson-annotations.version>
         <jackson-databind.version>2.16.1</jackson-databind.version>
         <rest-assured.version>5.4.0</rest-assured.version>
         <json-schema-validator.version>4.3.1</json-schema-validator.version>
         <junit-jupiter.version>5.10.1</junit-jupiter.version>
         <mavenSurefirePlugin.version>2.22.2</mavenSurefirePlugin.version>
-        <mavenCompilerPlugin.version>3.8.1</mavenCompilerPlugin.version>
+        <mavenCompilerPlugin.version>3.13.0</mavenCompilerPlugin.version>
         <maven.checkstyle.plugin.version>3.1.0</maven.checkstyle.plugin.version>
         <spotbugs.plugin.version>4.8.2.0</spotbugs.plugin.version>
         <spotbugs.version>4.8.3</spotbugs.version>
@@ -83,6 +84,7 @@
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
+<!--                    <release>${maven.compiler.release}</release>-->
                     <showDeprecation>false</showDeprecation>
                 </configuration>
             </plugin>

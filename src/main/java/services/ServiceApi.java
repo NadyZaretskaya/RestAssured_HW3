@@ -14,15 +14,16 @@ public class ServiceApi {
   private final String baseurl = System.getProperty("base.url", "https://petstore.swagger.io/v2");
   private final String basepath = "/user";
   private RequestSpecification spec;
-  public ServiceApi(){
-    spec=given()
+
+  public ServiceApi() {
+    spec = given()
             .baseUri(baseurl)
             .basePath(basepath)
             .contentType(ContentType.JSON)
             .log().all();
   }
 
-  public ValidatableResponse createUser(UserDTO user){
+  public ValidatableResponse createUser(UserDTO user) {
     ValidatableResponse vr =
             given(spec)
                     .body(user)
@@ -35,11 +36,11 @@ public class ServiceApi {
     return vr;
   }
 
-  public ValidatableResponse getUserByName(String userByName){
+  public ValidatableResponse getUserByName(String userByName) {
     ValidatableResponse vr =
             given(spec)
                     .when()
-                    .get("/"+userByName)
+                    .get("/" + userByName)
                     .then()
                     .log().all();
     vr.body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schema/GetUserByName.json"));
@@ -47,11 +48,11 @@ public class ServiceApi {
     return vr;
   }
 
-  public ValidatableResponse getUserByName404(String userByName){
+  public ValidatableResponse getUserByName404(String userByName) {
     ValidatableResponse vr =
             given(spec)
                     .when()
-                    .get("/"+userByName)
+                    .get("/" + userByName)
                     .then()
                     .log().all();
     vr.body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schema/GetUserByName404.json"));
@@ -59,12 +60,12 @@ public class ServiceApi {
     return vr;
   }
 
-  public ValidatableResponse putUser(UpdateUserDTO updateUser, String userName){
+  public ValidatableResponse putUser(UpdateUserDTO updateUser, String userName) {
     ValidatableResponse vr =
             given(spec)
                     .body(updateUser)
                     .when()
-                    .put("/"+userName)
+                    .put("/" + userName)
                     .then()
                     .log().all();
     vr.body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schema/PutUser.json"));
@@ -72,14 +73,13 @@ public class ServiceApi {
     return vr;
   }
 
-  public ValidatableResponse deleteUser(String userByName){
+  public ValidatableResponse deleteUser(String userByName) {
     ValidatableResponse vr =
             given(spec)
                     .when()
-                    .delete("/"+userByName)
+                    .delete("/" + userByName)
                     .then()
                     .log().all();
-//    vr.extract().body().as(DeleteUserResponseDTO.class);
     return vr;
   }
 }

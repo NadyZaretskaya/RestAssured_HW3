@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserResponseDTO {
-    private Long code;
-    private String type;
-    private String message;
+  private Long code;
+  private String type;
+  private String message;
 }

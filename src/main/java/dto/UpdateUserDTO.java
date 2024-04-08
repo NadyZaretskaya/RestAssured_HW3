@@ -14,10 +14,10 @@ import lombok.NoArgsConstructor;
 public class UpdateUserDTO {
   private String email;
   private String firstName;
-  private Long id;
+  private Integer id;
   private String lastName;
   private String password;
   private String phone;
-  private Long userStatus;
+  private Integer userStatus;
   private String username;
 }

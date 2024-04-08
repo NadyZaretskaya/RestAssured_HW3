@@ -30,11 +30,6 @@
   "required": [
     "id",
     "username",
-    "firstName",
-    "lastName",
-    "email",
-    "password",
-    "phone",
     "userStatus"
   ]
 }
