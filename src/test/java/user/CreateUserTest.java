@@ -125,7 +125,6 @@ public class CreateUserTest {
 
   @Test
   public void createUserWithPut() {
-
     //check user doesn't exist
     ValidatableResponse responseGetDeleted = serviceApi.getUserByName404(userName);
     GetUserByNameResponse404DTO getUserDataDeleted = responseGetDeleted.extract().body().as(GetUserByNameResponse404DTO.class);
