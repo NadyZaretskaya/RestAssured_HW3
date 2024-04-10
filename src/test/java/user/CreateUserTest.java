@@ -3,12 +3,12 @@ package user;
 import dto.*;
 import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.*;
-import services.ServiceApi;
+import services.UserServiceApi;
 
 import java.io.IOException;
 
 public class CreateUserTest {
-  ServiceApi serviceApi = new ServiceApi();
+  UserServiceApi userApi = new UserServiceApi();
   private int userId = 2603;
   private String firstName = "Nady";
   private String lastName = "Zaretskaya";
@@ -31,8 +31,8 @@ public class CreateUserTest {
         .email(email)
         .phone(phone)
         .build();
-    serviceApi.createUser(userDTO);
-    ValidatableResponse response = serviceApi.createUser(userDTO);
+    userApi.createUser(userDTO);
+    ValidatableResponse response = userApi.createUser(userDTO);
     UserResponseDTO actualData = response.extract().body().as(UserResponseDTO.class);
     Assertions.assertAll("Check create user",
         () -> Assertions.assertEquals(200, actualData.getCode(), "Incorrect code"),
@@ -41,7 +41,7 @@ public class CreateUserTest {
     );
 
     //check that user fully created
-    ValidatableResponse responseGet = serviceApi.getUserByName(userName);
+    ValidatableResponse responseGet = userApi.getUserByName(userName);
     GetUserByNameResponseDTO getUserData = responseGet.extract().body().as(GetUserByNameResponseDTO.class);
     Assertions.assertAll("Check get user by name",
         () -> Assertions.assertEquals(userId, getUserData.getId(), "Incorrect id"),
@@ -55,7 +55,7 @@ public class CreateUserTest {
     );
 
     //delete user
-    ValidatableResponse responseDelete = serviceApi.deleteUser(userName);
+    ValidatableResponse responseDelete = userApi.deleteUser(userName);
     DeleteUserResponseDTO deleteUserData = responseDelete.extract().body().as(DeleteUserResponseDTO.class);
     Assertions.assertAll("Check delete user",
         () -> Assertions.assertEquals(200, deleteUserData.getCode(), "Incorrect code"),
@@ -64,7 +64,7 @@ public class CreateUserTest {
     );
 
     //check user deleted
-    ValidatableResponse responseGetDeleted = serviceApi.getUserByName404(userName);
+    ValidatableResponse responseGetDeleted = userApi.getUserByName404(userName);
     GetUserByNameResponse404DTO getUserDataDeleted = responseGetDeleted.extract().body().as(GetUserByNameResponse404DTO.class);
     Assertions.assertAll("Check create user",
         () -> Assertions.assertEquals(1, getUserDataDeleted.getCode(), "Incorrect code"),
@@ -83,8 +83,8 @@ public class CreateUserTest {
         .lastName(lastName)
         .username(userName)
         .build();
-    serviceApi.createUser(userDTO);
-    ValidatableResponse response = serviceApi.createUser(userDTO);
+    userApi.createUser(userDTO);
+    ValidatableResponse response = userApi.createUser(userDTO);
     UserResponseDTO actualData = response.extract().body().as(UserResponseDTO.class);
     Assertions.assertAll("Check create user",
         () -> Assertions.assertEquals(200, actualData.getCode(), "Incorrect code"),
@@ -93,7 +93,7 @@ public class CreateUserTest {
     );
 
     //check that user fully created
-    ValidatableResponse responseGet = serviceApi.getUserByName(userName);
+    ValidatableResponse responseGet = userApi.getUserByName(userName);
     GetUserByNameResponseDTO getUserData = responseGet.extract().body().as(GetUserByNameResponseDTO.class);
     Assertions.assertAll("Check get user by name",
         () -> Assertions.assertEquals(userId, getUserData.getId(), "Incorrect id"),
@@ -104,7 +104,7 @@ public class CreateUserTest {
     );
 
     //delete user
-    ValidatableResponse responseDelete = serviceApi.deleteUser(userName);
+    ValidatableResponse responseDelete = userApi.deleteUser(userName);
     DeleteUserResponseDTO deleteUserData = responseDelete.extract().body().as(DeleteUserResponseDTO.class);
     Assertions.assertAll("Check delete user",
         () -> Assertions.assertEquals(200, deleteUserData.getCode(), "Incorrect code"),
@@ -113,7 +113,7 @@ public class CreateUserTest {
     );
 
     //check user deleted
-    ValidatableResponse responseGetDeleted = serviceApi.getUserByName404(userName);
+    ValidatableResponse responseGetDeleted = userApi.getUserByName404(userName);
     GetUserByNameResponse404DTO getUserDataDeleted = responseGetDeleted.extract().body().as(GetUserByNameResponse404DTO.class);
     Assertions.assertAll("Check create user",
         () -> Assertions.assertEquals(1, getUserDataDeleted.getCode(), "Incorrect code"),
@@ -126,7 +126,7 @@ public class CreateUserTest {
   @Test
   public void createUserWithPut() {
     //check user doesn't exist
-    ValidatableResponse responseGetDeleted = serviceApi.getUserByName404(userName);
+    ValidatableResponse responseGetDeleted = userApi.getUserByName404(userName);
     GetUserByNameResponse404DTO getUserDataDeleted = responseGetDeleted.extract().body().as(GetUserByNameResponse404DTO.class);
     Assertions.assertAll("Check create user",
         () -> Assertions.assertEquals(1, getUserDataDeleted.getCode(), "Incorrect code"),
@@ -146,7 +146,7 @@ public class CreateUserTest {
         .build();
 
     //Check that request success
-    ValidatableResponse responseUpdateUser = serviceApi.putUser(updateUser, userName);
+    ValidatableResponse responseUpdateUser = userApi.putUser(updateUser, userName);
     UpdateUserResponseDTO actualResponse = responseUpdateUser.extract().body().as(UpdateUserResponseDTO.class);
     Assertions.assertAll("Check user updated",
         () -> Assertions.assertEquals(200, actualResponse.getCode(), "Incorrect http code"),
@@ -155,7 +155,7 @@ public class CreateUserTest {
     );
 
     //Validate that user created with put method
-    ValidatableResponse getResponse = serviceApi.getUserByName(userName);
+    ValidatableResponse getResponse = userApi.getUserByName(userName);
     GetUserByNameResponseDTO getUpdatedData = getResponse.extract().body().as(GetUserByNameResponseDTO.class);
     Assertions.assertAll("Check fields added to user data",
         () -> Assertions.assertEquals(123456, getUpdatedData.getId(), "Incorrect id"),
@@ -169,7 +169,7 @@ public class CreateUserTest {
     );
 
     //delete user
-    serviceApi.deleteUser(userName);
+    userApi.deleteUser(userName);
 
   }
 

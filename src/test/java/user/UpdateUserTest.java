@@ -3,13 +3,11 @@ package user;
 import dto.*;
 import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.*;
-import services.ServiceApi;
-
-import java.sql.Timestamp;
+import services.UserServiceApi;
 
 public class UpdateUserTest {
 
-  ServiceApi serviceApi = new ServiceApi();
+  UserServiceApi userApi = new UserServiceApi();
 
   private Integer userId = 32;
   private String userName = "Nady.Z";
@@ -29,10 +27,10 @@ public class UpdateUserTest {
         .userStatus(userStatus)
         .username(userName)
         .build();
-    serviceApi.createUser(userDTO);
+    userApi.createUser(userDTO);
 
     //Update user - add email, password and phone
-    ValidatableResponse response = serviceApi.getUserByName(userName);
+    ValidatableResponse response = userApi.getUserByName(userName);
     GetUserByNameResponseDTO actualData = response.extract().body().as(GetUserByNameResponseDTO.class);
 
     UpdateUserDTO updateUser = UpdateUserDTO.builder()
@@ -47,7 +45,7 @@ public class UpdateUserTest {
         .build();
 
     //Check that user updated
-    ValidatableResponse responseUpdateUser = serviceApi.putUser(updateUser, userName);
+    ValidatableResponse responseUpdateUser = userApi.putUser(updateUser, userName);
     UpdateUserResponseDTO actualResponse = responseUpdateUser.extract().body().as(UpdateUserResponseDTO.class);
     Assertions.assertAll("Check user updated",
         () -> Assertions.assertEquals(200, actualResponse.getCode(), "Incorrect http code"),
@@ -56,7 +54,7 @@ public class UpdateUserTest {
     );
 
     //Validate that fields added (email, password, phone)
-    ValidatableResponse getResponse = serviceApi.getUserByName(userName);
+    ValidatableResponse getResponse = userApi.getUserByName(userName);
     GetUserByNameResponseDTO getUpdatedData = getResponse.extract().body().as(GetUserByNameResponseDTO.class);
     Assertions.assertAll("Check fields added to user data",
         () -> Assertions.assertEquals(userId, getUpdatedData.getId(), "Incorrect id"),
@@ -85,10 +83,10 @@ public class UpdateUserTest {
         .password(password)
         .phone(phone)
         .build();
-    serviceApi.createUser(userDTO);
+    userApi.createUser(userDTO);
 
     //Update user - clear first name, last name, email, password and phone
-    ValidatableResponse response = serviceApi.getUserByName(userName);
+    ValidatableResponse response = userApi.getUserByName(userName);
     GetUserByNameResponseDTO actualData = response.extract().body().as(GetUserByNameResponseDTO.class);
 
     UpdateUserDTO updateUser = UpdateUserDTO.builder()
@@ -103,7 +101,7 @@ public class UpdateUserTest {
         .build();
 
     //Check that user updated
-    ValidatableResponse responseUpdateUser = serviceApi.putUser(updateUser, userName);
+    ValidatableResponse responseUpdateUser = userApi.putUser(updateUser, userName);
     UpdateUserResponseDTO actualResponse = responseUpdateUser.extract().body().as(UpdateUserResponseDTO.class);
     Assertions.assertAll("Check user updated",
         () -> Assertions.assertEquals(200, actualResponse.getCode(), "Incorrect http code"),
@@ -112,7 +110,7 @@ public class UpdateUserTest {
     );
 
     //Validate that fields added (email, password, phone)
-    ValidatableResponse getResponse = serviceApi.getUserByName(userName);
+    ValidatableResponse getResponse = userApi.getUserByName(userName);
     GetUserByNameResponseDTO getUpdatedData = getResponse.extract().body().as(GetUserByNameResponseDTO.class);
     Assertions.assertAll("Check fields added to user data",
         () -> Assertions.assertEquals(userId, getUpdatedData.getId(), "Incorrect id"),
@@ -128,6 +126,6 @@ public class UpdateUserTest {
   }
 
   public void deleteUser(String userName) {
-    serviceApi.deleteUser(userName);
+    userApi.deleteUser(userName);
   }
 }
